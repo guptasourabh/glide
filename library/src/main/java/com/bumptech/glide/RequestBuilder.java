@@ -552,6 +552,7 @@ public class RequestBuilder<TranscodeType> implements Cloneable {
       case NORMAL:
         return Priority.HIGH;
       case HIGH:
+        return Priority.HIGH;
       case IMMEDIATE:
         return Priority.IMMEDIATE;
       default:
@@ -582,7 +583,7 @@ public class RequestBuilder<TranscodeType> implements Cloneable {
       }
 
       Priority thumbPriority = thumbnailBuilder.requestOptions.isPrioritySet()
-          ? thumbnailBuilder.requestOptions.getPriority() : getThumbnailPriority(priority);
+          ? thumbnailBuilder.requestOptions.getPriority() : priority;
 
       int thumbOverrideWidth = thumbnailBuilder.requestOptions.getOverrideWidth();
       int thumbOverrideHeight = thumbnailBuilder.requestOptions.getOverrideHeight();
@@ -611,7 +612,7 @@ public class RequestBuilder<TranscodeType> implements Cloneable {
           .sizeMultiplier(thumbSizeMultiplier);
 
       Request thumbnailRequest = obtainRequest(target, thumbnailOptions, coordinator,
-          transitionOptions, getThumbnailPriority(priority), overrideWidth, overrideHeight);
+          transitionOptions, priority, overrideWidth, overrideHeight);
 
       coordinator.setRequests(fullRequest, thumbnailRequest);
       return coordinator;
